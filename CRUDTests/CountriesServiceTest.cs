@@ -18,7 +18,7 @@ namespace CRUDTests
 		}
 
 		#region AddCountry
-		// When CountryAddRequest is null, it should throw ArgumentException
+		// When CountryAddRequest is null, it should throw ArgumentNullException
 		[Fact]
 		public void AddCountry_NullCountry()
 		{
@@ -72,11 +72,13 @@ namespace CRUDTests
 			// Arrange
 			CountryAddRequest? request = new CountryAddRequest() { CountryName = "Japan" };
 
-			// Assert
-			CountryResponse response = _countriesService.AddCountry(request);
-
 			// Act
+			CountryResponse response = _countriesService.AddCountry(request);
+			List<CountryResponse> countries_from_GetAllCountries = _countriesService.GetAllCountries();
+
+			// Assert
 			Assert.True(response.CountryID != Guid.Empty);
+			Assert.Contains(response, countries_from_GetAllCountries);
 		}
 
 		#endregion
@@ -85,7 +87,7 @@ namespace CRUDTests
 		#region GetAllCountries
 
 		[Fact]
-		// The list of countries should be empty or default (before adding any countries)
+		// The list of countries should be empty by default (before adding any countries)
 		public void GetAllCountries_EmptyList()
 		{
 			// Act
@@ -99,7 +101,7 @@ namespace CRUDTests
 		public void GetAllCountries_AddFewCountries()
 		{
 			// Arrange
-			List<CountryAddRequest> country_request_list = new List<CountryAddRequest>()
+			List<CountryAddRequest> country_request_list = new List<CountryAddRequest>() 
 			{
 				new CountryAddRequest() { CountryName = "USA" },
 				new CountryAddRequest() { CountryName = "UK" }

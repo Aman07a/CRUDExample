@@ -23,7 +23,7 @@ namespace Services
 				throw new ArgumentNullException(nameof(countryAddRequest));
 			}
 
-			// Validation: CounntryName can't be null
+			// Validation: CountryName can't be null
 			if (countryAddRequest.CountryName == null)
 			{
 				throw new ArgumentException(nameof(countryAddRequest.CountryName));
@@ -49,7 +49,7 @@ namespace Services
 
 		public List<CountryResponse> GetAllCountries()
 		{
-			throw new NotImplementedException();
+			return _countries.Select(country => country.ToCountryResponse()).ToList();
 		}
 	}
 }
