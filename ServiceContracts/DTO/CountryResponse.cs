@@ -25,7 +25,8 @@ namespace ServiceContracts.DTO
 			}
 			CountryResponse country_to_compare = (CountryResponse)obj;
 
-			return CountryID == country_to_compare.CountryID && CountryName == country_to_compare.CountryName;
+			return CountryID == country_to_compare.CountryID && 
+				CountryName == country_to_compare.CountryName;
 		}
 
 		public override int GetHashCode()
