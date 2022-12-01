@@ -27,7 +27,7 @@ namespace Services
 			return personResponse;
 		}
 
-		public PersonResponse AddPerson(PersonAddRequest personAddRequest)
+		public PersonResponse AddPerson(PersonAddRequest? personAddRequest)
 		{
 			// Check if PersonAddRequest is not null
 			if (personAddRequest == null)
@@ -52,6 +52,11 @@ namespace Services
 		}
 
 		public List<PersonResponse> GetAllPersons()
+		{
+			throw new NotImplementedException();
+		}
+
+		public PersonResponse? GetPersonByPersonID(Guid? personID)
 		{
 			throw new NotImplementedException();
 		}
