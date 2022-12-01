@@ -34,15 +34,14 @@ namespace ServiceContracts.DTO
 			if (obj.GetType() != typeof(PersonResponse)) return false;
 
 			PersonResponse person = (PersonResponse)obj;
-
-			return PersonID == person.PersonID &&
-				PersonName == person.PersonName &&
-				DateOfBirth == person.DateOfBirth &&
-				Gender == person.Gender &&
-				Country == person.Country &&
-				Address == person.Address &&
-				ReceiveNewsLetters == person.ReceiveNewsLetters &&
-				Age == person.Age;
+			return PersonID == person.PersonID && 
+				PersonName == person.PersonName && 
+				Email == person.Email && 
+				DateOfBirth == person.DateOfBirth && 
+				Gender == person.Gender && 
+				CountryID == person.CountryID && 
+				Address == person.Address && 
+				ReceiveNewsLetters == person.ReceiveNewsLetters;
 		}
 
 		public override int GetHashCode()
@@ -60,10 +59,12 @@ namespace ServiceContracts.DTO
 		/// /// <returns>Returns the converted PersonResponse object</returns>
 		public static PersonResponse ToPersonResponse(this Person person)
 		{
+			//person => convert => PersonResponse
 			return new PersonResponse()
 			{
 				PersonID = person.PersonID,
 				PersonName = person.PersonName,
+				Email = person.Email,
 				DateOfBirth = person.DateOfBirth,
 				ReceiveNewsLetters = person.ReceiveNewsLetters,
 				Address = person.Address,

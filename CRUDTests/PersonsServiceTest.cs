@@ -8,18 +8,18 @@ using ServiceContracts.Enums;
 
 namespace CRUDTests
 {
-	public class PersonServiceTest
+	public class PersonsServiceTest
 	{
-		// Private field
+		//private fields
 		private readonly IPersonsService _personService;
 
 		// Constructor
-		public PersonServiceTest()
+		public PersonsServiceTest()
 		{
 			_personService = new PersonsService();
 		}
 
-		#region Add Person
+		#region AddPerson
 
 		// When we supply null value as PersonAddRequest, it should throw ArgumentNullException
 		[Fact]
@@ -29,11 +29,12 @@ namespace CRUDTests
 			PersonAddRequest? personAddRequest = null;
 
 			// Act
-			Assert.Throws<ArgumentException>(() =>
+			Assert.Throws<ArgumentNullException>(() =>
 			{
-				personAddRequest = new PersonAddRequest();
+				_personService.AddPerson(personAddRequest);
 			});
 		}
+
 
 		// When we supply null value as PersonName, it should throw ArgumentException
 		[Fact]
@@ -49,31 +50,28 @@ namespace CRUDTests
 			});
 		}
 
-		// When we supply null value as PersonAddRequest,
+		// When we supply proper person details,
 		// it should insert the person into the persons list
-		// And it should return an object of PersonResponse,
-		// which includes with the newly generated perosn id
+		// And it should return an object of PersonResponse, 
+		// which includes with the newly generated person id
 		[Fact]
 		public void AddPerson_ProperPersonDetails()
 		{
-			//Arrange
-			PersonAddRequest? personAddRequest = new PersonAddRequest()
-			{
-				PersonName = "Person name...",
-				Email = "person@example.com",
-				Address = "sample address",
-				CountryID = Guid.NewGuid(),
-				Gender = GenderOptions.Male,
-				DateOfBirth = DateTime.Parse("2000-01-01"),
-				ReceiveNewsLetters = true
-			};
+			// Arrange
+			PersonAddRequest? personAddRequest = new PersonAddRequest() 
+			{ 
+				PersonName = "Person name...", 
+				Email = "person@example.com", 
+				Address = "sample address", 
+				CountryID = Guid.NewGuid(), 
+				Gender = GenderOptions.Male, 
+				DateOfBirth = DateTime.Parse("2000-01-01"), 
+				ReceiveNewsLetters = true };
 
 			// Act
-			PersonResponse person_response_from_add = 
-				_personService.AddPerson(personAddRequest);
+			PersonResponse person_response_from_add = _personService.AddPerson(personAddRequest);
 
-			List<PersonResponse> persons_list = 
-				_personService.GetAllPersons();
+			List<PersonResponse> persons_list = _personService.GetAllPersons();
 
 			// Assert
 			Assert.True(person_response_from_add.PersonID != Guid.Empty);
