@@ -1,8 +1,6 @@
-﻿using Entities;
+﻿using System;
+using Entities;
 using ServiceContracts.Enums;
-using System;
-using System.Net;
-using System.Reflection;
 
 namespace ServiceContracts.DTO
 {
@@ -34,13 +32,13 @@ namespace ServiceContracts.DTO
 			if (obj.GetType() != typeof(PersonResponse)) return false;
 
 			PersonResponse person = (PersonResponse)obj;
-			return PersonID == person.PersonID && 
-				PersonName == person.PersonName && 
-				Email == person.Email && 
-				DateOfBirth == person.DateOfBirth && 
-				Gender == person.Gender && 
-				CountryID == person.CountryID && 
-				Address == person.Address && 
+			return PersonID == person.PersonID &&
+				PersonName == person.PersonName &&
+				Email == person.Email &&
+				DateOfBirth == person.DateOfBirth &&
+				Gender == person.Gender &&
+				CountryID == person.CountryID &&
+				Address == person.Address &&
 				ReceiveNewsLetters == person.ReceiveNewsLetters;
 		}
 
@@ -52,6 +50,21 @@ namespace ServiceContracts.DTO
 		public override string ToString()
 		{
 			return $"Person ID: {PersonID} Person Name: {PersonName}  Email: {Email} DateOfBirth: {DateOfBirth?.ToString("dd MM yyyy")}  Gender: {Gender} Country ID: {CountryID} Address: {Address} ReceiveNewsLetters: {ReceiveNewsLetters}";
+		}
+
+		public PersonUpdateRequest ToPersonUpdateRequest()
+		{
+			return new PersonUpdateRequest()
+			{
+				PersonID = PersonID,
+				PersonName = PersonName,
+				Email = Email,
+				DateOfBirth = DateOfBirth,
+				Gender = (GenderOptions)Enum.Parse(typeof(GenderOptions), Gender, true),
+				Address = Address,
+				CountryID = CountryID,
+				ReceiveNewsLetters = ReceiveNewsLetters
+			};
 		}
 	}
 
