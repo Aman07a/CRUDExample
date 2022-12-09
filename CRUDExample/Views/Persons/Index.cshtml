@@ -3,9 +3,10 @@
 @{
 	ViewBag.Title = "Persons";
 }
-
 <form action="~/persons/index" method="get">
 	<h1>Persons</h1>
+
+	<a href="~/persons/create">Create Person</a>
 
 	<div class="box flex">
 		<div class="flex-1">
@@ -26,8 +27,8 @@
 		</div>
 
 		<div class="flex-1">
-			<input type="search" id="Search" class="form-input" placeholder="Search" name="searchString" 
-				value="@ViewBag.CurrentSearchString" />
+			<input type="search" id="Search" class="form-input" placeholder="Search" name="searchString"
+				   value="@ViewBag.CurrentSearchString" />
 		</div>
 
 		<div class="flex-1">
