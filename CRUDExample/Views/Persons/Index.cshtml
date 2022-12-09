@@ -1,87 +1,87 @@
 ﻿@model IEnumerable<PersonResponse>
 
 @{
-	ViewBag.Title = "Persons";
+    ViewBag.Title = "Persons";
 }
-<form action="~/persons/index" method="get">
-	<h1>Persons</h1>
 
-	<a href="~/persons/create">Create Person</a>
+<form asp-controller="Persons" asp-action="Index" method="get">
+    <h1>Persons</h1>
 
-	<div class="box flex">
-		<div class="flex-1">
-			<select class="form-input" name="searchBy">
-				@foreach (var field in ViewBag.SearchFields)
-				{
-					if (field.Key == ViewBag.CurrentSearchBy)
-					{
-						<option value="@field.Key" selected="selected">@field.Value</option>
-					}
-					else
-					{
-						<option value="@field.Key">@field.Value</option>
-					}
-				}
-				@* Eg: searchBy=PersonName&searchString=abc *@
-			</select>
-		</div>
+    <a asp-controller="Persons" asp-action="Create">Create Person</a>
 
-		<div class="flex-1">
-			<input type="search" id="Search" class="form-input" placeholder="Search" name="searchString"
-				   value="@ViewBag.CurrentSearchString" />
-		</div>
+    <div class="box flex">
+        <div class="flex-1">
+            <select class="form-input" name="searchBy">
+                @foreach (var field in ViewBag.SearchFields)
+                {
+                    if (field.Key == ViewBag.CurrentSearchBy)
+                    {
+                        <option value="@field.Key" selected="selected">@field.Value</option>
+                    }
+                    else
+                    {
+                        <option value="@field.Key">@field.Value</option>
+                    }
+                }
+                @* Eg: searchBy=PersonName&searchString=abc *@
+            </select>
+        </div>
 
-		<div class="flex-1">
-			<button class="button button-blue-back">Search</button>
-			<a href="~/persons/index" class="link-hover">Clear all</a>
-		</div>
-	</div>
+        <div class="flex-1">
+            <input type="search" id="Search" class="form-input" placeholder="Search" name="searchString" 
+                value="@ViewBag.CurrentSearchString" />
+        </div>
 
-	<table class="table w-100 mt">
-		<thead>
-			<tr>
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
-				{ "ColumnName", nameof(PersonResponse.PersonName) },
-				{ "DisplayName", "Person Name" },
-				})
+        <div class="flex-1">
+            <button class="button button-blue-back">Search</button>
+            <a asp-controller="Persons" asp-action="Index" class="link-hover">Clear all</a>
+        </div>
+    </div>
 
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
-				{ "ColumnName", nameof(PersonResponse.Email) },
-				{ "DisplayName", "Email" },
-				})
+    <table class="table w-100 mt">
+        <thead>
+            <tr>
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
+                { "ColumnName", nameof(PersonResponse.PersonName) },
+                { "DisplayName", "Person Name" },
+                })
 
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
-				{ "ColumnName", nameof(PersonResponse.DateOfBirth) },
-				{ "DisplayName", "Date of Birth" },
-				})
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
+                { "ColumnName", nameof(PersonResponse.Email) },
+                { "DisplayName", "Email" },
+                })
 
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
-				{ "ColumnName", nameof(PersonResponse.Age) },
-				{ "DisplayName", "Age" },
-				})
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
+                { "ColumnName", nameof(PersonResponse.DateOfBirth) },
+                { "DisplayName", "Date of Birth" },
+                })
 
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
-				{ "ColumnName", nameof(PersonResponse.Gender) },
-				{ "DisplayName", "Gender" },
-				})
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
+                { "ColumnName", nameof(PersonResponse.Age) },
+                { "DisplayName", "Age" },
+                })
 
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
-				{ "ColumnName", nameof(PersonResponse.Country) },
-				{ "DisplayName", "Country" },
-				})
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
+                { "ColumnName", nameof(PersonResponse.Gender) },
+                { "DisplayName", "Gender" },
+                })
 
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
-				{ "ColumnName", nameof(PersonResponse.Address) },
-				{ "DisplayName", "Address" },
-				})
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
+                { "ColumnName", nameof(PersonResponse.Country) },
+                { "DisplayName", "Country" },
+                })
 
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
-				{ "ColumnName", nameof(PersonResponse.ReceiveNewsLetters) },
-				{ "DisplayName", "Receive News Letters" },
-				})
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
+                { "ColumnName", nameof(PersonResponse.Address) },
+                { "DisplayName", "Address" },
+                })
 
-			</tr>
-		</thead>
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) {
+                { "ColumnName", nameof(PersonResponse.ReceiveNewsLetters) },
+                { "DisplayName", "Receive News Letters" },
+                })
+            </tr>
+        </thead>
 		<tbody>
 			@foreach (PersonResponse person in Model)
 			{
@@ -98,6 +98,5 @@
 			}
 			<tr></tr>
 		</tbody>
-
 	</table>
 </form>
