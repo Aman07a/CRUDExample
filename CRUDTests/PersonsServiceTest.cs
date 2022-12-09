@@ -532,6 +532,10 @@ namespace CRUDTests
 			{
 				PersonName = "John",
 				CountryID = country_response_from_add.CountryID,
+				Email = "john@example.com",
+				Address = "address...",
+				Gender = GenderOptions.Male,
+				ReceiveNewsLetters = true,
 			};
 			PersonResponse person_response_from_add = _personService.AddPerson(person_add_request);
 
