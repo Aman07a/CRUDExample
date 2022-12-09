@@ -141,6 +141,18 @@ namespace Services
 					ReceiveNewsLetters = false,
 					CountryID = Guid.Parse("80DF255C-EFE7-49E5-A7F9-C35D7C701CAB")
 				});
+
+				_persons.Add(new Person()
+				{
+					PersonID = Guid.Parse("A28FBD3C-CEFE-46B9-B3F6-270DD06969E9"),
+					PersonName = "David",
+					Email = "david@fox.com",
+					DateOfBirth = DateTime.Parse("1992-02-17"),
+					Gender = "Male",
+					Address = "6592 Norway Street",
+					ReceiveNewsLetters = True,
+					CountryID = Guid.Parse("746AB694-BADB-4760-AE25-10C4C0102732")
+				});
 			}
 		}
 
