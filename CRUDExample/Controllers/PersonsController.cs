@@ -138,5 +138,30 @@ namespace CRUDExample.Controllers
 				return View();
 			}
 		}
+
+		[HttpGet]
+		[Route("[action]/{personID}")]
+		public IActionResult Delete(Guid personID)
+		{
+			PersonResponse? personResponse = _personsService.GetPersonByPersonID(personID);
+
+			if (personResponse == null)
+				return RedirectToAction("Index");
+
+			return View(personResponse);
+		}
+
+		[HttpPost]
+		[Route("[action]/{personID}")]
+		public IActionResult Delete(PersonUpdateRequest personUpdateRequest)
+		{
+			PersonResponse? personResponse = _personsService.GetPersonByPersonID(personUpdateRequest.PersonID);
+
+			if (personResponse == null)
+				return RedirectToAction("Index");
+
+			_personsService.DeletePerson(personUpdateRequest.PersonID);
+			return Redirect("Index");
+		}
 	}
 }
