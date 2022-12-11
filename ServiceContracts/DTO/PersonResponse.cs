@@ -77,7 +77,7 @@ namespace ServiceContracts.DTO
 		/// /// <returns>Returns the converted PersonResponse object</returns>
 		public static PersonResponse ToPersonResponse(this Person person)
 		{
-			//person => convert => PersonResponse
+			// person => convert => PersonResponse
 			return new PersonResponse()
 			{
 				PersonID = person.PersonID,
@@ -88,7 +88,8 @@ namespace ServiceContracts.DTO
 				Address = person.Address,
 				CountryID = person.CountryID,
 				Gender = person.Gender,
-				Age = (person.DateOfBirth != null) ? Math.Round((DateTime.Now - person.DateOfBirth.Value).TotalDays / 365.25) : null
+				Age = (person.DateOfBirth != null) ? Math.Round((DateTime.Now - person.DateOfBirth.Value).TotalDays / 365.25) : null,
+				Country = person.Country?.CountryName
 			};
 		}
 	}
