@@ -38,6 +38,12 @@ namespace Entities
                 .HasColumnName("TaxIdentificationNumber")
                 .HasColumnType("varchar(8)")
                 .HasDefaultValue("ABC12345");
+
+            // modelBuilder.Entity<Person>()
+            //     .HasIndex(temp => temp.TIN).IsUnique();
+
+            modelBuilder.Entity<Person>()
+                .HasCheckConstraint("CHK_TIN", "len([TaxIdentificationNumber]) = 8");
         }
 
         public List<Person> sp_GetAllPersons()
