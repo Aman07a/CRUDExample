@@ -7,7 +7,9 @@
 <form asp-controller="Persons" asp-action="Index" method="get">
 	<h1>Persons</h1>
 
-	<a asp-controller="Persons" asp-action="Create">Create Person</a>
+	<a asp-controller="Persons" asp-action="Create" class="ml">Create Person</a>
+
+	<a asp-controller="Persons" asp-action="PersonsPDF">Download as PDF</a>
 
 	<div class="box flex">
 		<div class="flex-1">
@@ -28,8 +30,7 @@
 		</div>
 
 		<div class="flex-1">
-			<input type="search" id="Search" class="form-input" placeholder="Search" name="searchString"
-				   value="@ViewBag.CurrentSearchString" />
+			<input type="search" id="Search" class="form-input" placeholder="Search" name="searchString" value="@ViewBag.CurrentSearchString" />
 		</div>
 
 		<div class="flex-1">
