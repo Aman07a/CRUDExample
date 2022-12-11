@@ -1,23 +1,24 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using ServiceContracts.DTO;
 
 namespace Services
 {
-	public class CountriesService : ICountriesService
-	{
-		// Private field
-		private readonly PersonsDbContext _db;
+    public class CountriesService : ICountriesService
+    {
+        // Private field
+        private readonly PersonsDbContext _db;
 
-		// Constructor
-		public CountriesService(PersonsDbContext personsDbContext)
-		{
-			_db = personsDbContext;
+        // Constructor
+        public CountriesService(PersonsDbContext personsDbContext)
+        {
+            _db = personsDbContext;
 
         }
 
-		public CountryResponse AddCountry(CountryAddRequest? countryAddRequest)
-		{
+        public async Task<CountryResponse> AddCountry(CountryAddRequest? countryAddRequest)
+        {
             // Validation: countryAddRequest parameter can't be null
             if (countryAddRequest == null)
             {
@@ -31,7 +32,7 @@ namespace Services
             }
 
             // Validation: CountryName can't be duplicate
-            if (_db.Countries.Count(temp => temp.CountryName == countryAddRequest.CountryName) > 0)
+            if (await _db.Countries.CountAsync(temp => temp.CountryName == countryAddRequest.CountryName) > 0)
             {
                 throw new ArgumentException("Given country name already exists");
             }
@@ -39,33 +40,33 @@ namespace Services
             // Convert object from CountryAddRequest to Country type
             Country country = countryAddRequest.ToCountry();
 
-			// Generate CountryID
-			country.CountryID = Guid.NewGuid();
+            // Generate CountryID
+            country.CountryID = Guid.NewGuid();
 
             // Add country object into _countries
             _db.Countries.Add(country);
-			_db.SaveChanges();
+            await _db.SaveChangesAsync();
 
-			return country.ToCountryResponse();
-		}
+            return country.ToCountryResponse();
+        }
 
-		public List<CountryResponse> GetAllCountries()
-		{
-			return _db.Countries.Select(country => country.ToCountryResponse()).ToList();
-		}
+        public async Task<List<CountryResponse>> GetAllCountries()
+        {
+            return await _db.Countries.Select(country => country.ToCountryResponse()).ToListAsync();
+        }
 
-		public CountryResponse? GetCountryByCountryID(Guid? countryID)
-		{
-			if (countryID == null)
-				return null;
+        public async Task<CountryResponse?> GetCountryByCountryID(Guid? countryID)
+        {
+            if (countryID == null)
+                return null;
 
-			Country? country_response_from_list =
-                _db.Countries.FirstOrDefault(temp => temp.CountryID == countryID);
+            Country? country_response_from_list =
+                await _db.Countries.FirstOrDefaultAsync(temp => temp.CountryID == countryID);
 
-			if (country_response_from_list == null)
-				return null;
+            if (country_response_from_list == null)
+                return null;
 
-			return country_response_from_list.ToCountryResponse();
-		}
-	}
+            return country_response_from_list.ToCountryResponse();
+        }
+    }
 }
