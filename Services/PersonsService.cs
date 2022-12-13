@@ -16,10 +16,10 @@ namespace Services
 {
 	public class PersonsService : IPersonsService
 	{
-		//private field
+		// Private field
 		private readonly IPersonsRepository _personsRepository;
 
-		//constructor
+		// Constructor
 		public PersonsService(IPersonsRepository personsRepository)
 		{
 			_personsRepository = personsRepository;
@@ -28,28 +28,27 @@ namespace Services
 
 		public async Task<PersonResponse> AddPerson(PersonAddRequest? personAddRequest)
 		{
-			//check if PersonAddRequest is not null
+			// Check if PersonAddRequest is not null
 			if (personAddRequest == null)
 			{
 				throw new ArgumentNullException(nameof(personAddRequest));
 			}
 
-			//Model validation
+			// Model validation
 			ValidationHelper.ModelValidation(personAddRequest);
 
-			//convert personAddRequest into Person type
+			// Convert personAddRequest into Person type
 			Person person = personAddRequest.ToPerson();
 
-			//generate PersonID
+			// Generate PersonID
 			person.PersonID = Guid.NewGuid();
 
-			//add person object to persons list
+			// Add person object to persons list
 			await _personsRepository.AddPerson(person);
 
-			//convert the Person object into PersonResponse type
+			// Convert the Person object into PersonResponse type
 			return person.ToPersonResponse();
 		}
-
 
 		public async Task<List<PersonResponse>> GetAllPersons()
 		{
@@ -58,7 +57,6 @@ namespace Services
 			return persons
 			  .Select(temp => temp.ToPersonResponse()).ToList();
 		}
-
 
 		public async Task<PersonResponse?> GetPersonByPersonID(Guid? personID)
 		{
@@ -72,7 +70,6 @@ namespace Services
 
 			return person.ToPersonResponse();
 		}
-
 
 		public async Task<List<PersonResponse>> GetFilteredPersons(string searchBy, string? searchString)
 		{
@@ -107,7 +104,6 @@ namespace Services
 			};
 			return persons.Select(temp => temp.ToPersonResponse()).ToList();
 		}
-
 
 		public async Task<List<PersonResponse>> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder)
 		{
@@ -154,23 +150,22 @@ namespace Services
 			return sortedPersons;
 		}
 
-
 		public async Task<PersonResponse> UpdatePerson(PersonUpdateRequest? personUpdateRequest)
 		{
 			if (personUpdateRequest == null)
 				throw new ArgumentNullException(nameof(personUpdateRequest));
 
-			//validation
+			// Validation
 			ValidationHelper.ModelValidation(personUpdateRequest);
 
-			//get matching person object to update
+			// Get matching person object to update
 			Person? matchingPerson = await _personsRepository.GetPersonByPersonID(personUpdateRequest.PersonID);
 			if (matchingPerson == null)
 			{
 				throw new ArgumentException("Given person id doesn't exist");
 			}
 
-			//update all details
+			// Update all details
 			matchingPerson.PersonName = personUpdateRequest.PersonName;
 			matchingPerson.Email = personUpdateRequest.Email;
 			matchingPerson.DateOfBirth = personUpdateRequest.DateOfBirth;
@@ -179,7 +174,8 @@ namespace Services
 			matchingPerson.Address = personUpdateRequest.Address;
 			matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
 
-			await _personsRepository.UpdatePerson(matchingPerson); //UPDATE
+			// UPDATE
+			await _personsRepository.UpdatePerson(matchingPerson);
 
 			return matchingPerson.ToPersonResponse();
 		}
@@ -208,7 +204,7 @@ namespace Services
 			CsvConfiguration csvConfiguration = new CsvConfiguration(CultureInfo.InvariantCulture);
 			CsvWriter csvWriter = new CsvWriter(streamWriter, csvConfiguration);
 
-			//PersonName,Email,DateOfBirth,Age,Gender,Country,Address,ReceiveNewsLetters
+			// PersonName,Email,DateOfBirth,Age,Gender,Country,Address,ReceiveNewsLetters
 			csvWriter.WriteField(nameof(PersonResponse.PersonName));
 			csvWriter.WriteField(nameof(PersonResponse.Email));
 			csvWriter.WriteField(nameof(PersonResponse.DateOfBirth));
