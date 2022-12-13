@@ -29,7 +29,7 @@ namespace RepositoryContracts
 		/// </summary>
 		/// <param name="personID">PersonID (guid) to search</param>
 		/// <returns>A person object or null</returns>
-		Task<List<Person>> GetPersonByPersonID(Guid personID);
+		Task<Person?> GetPersonByPersonID(Guid personID);
 
 		/// <summary>
 		/// Returns all person objects based on the given expression
